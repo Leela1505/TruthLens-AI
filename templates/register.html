@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Register Account - TruthLens AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="glass-card p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-primary bg-opacity-20 text-info d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-user-plus fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold text-white mb-1">Create an Account</h3>
+                    <p class="text-secondary small">Join TruthLens AI platform for fake news analysis and history tracking</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label text-secondary small fw-medium">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary border-opacity-25 text-secondary"><i class="fas fa-id-card"></i></span>
+                            <input type="text" class="form-control" id="full_name" name="full_name" placeholder="John Doe" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="username" class="form-label text-secondary small fw-medium">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary border-opacity-25 text-secondary"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="johndoe" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label text-secondary small fw-medium">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary border-opacity-25 text-secondary"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="password" class="form-label text-secondary small fw-medium">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary border-opacity-25 text-secondary"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" minlength="6" required>
+                                <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="confirm_password" class="form-label text-secondary small fw-medium">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary border-opacity-25 text-secondary"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="••••••••" minlength="6" required>
+                                <button class="btn btn-outline-secondary toggle-password" type="button" data-target="confirm_password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient-primary w-100 py-2.5 mb-3">
+                        <i class="fas fa-user-check me-2"></i> Register Account
+                    </button>
+                </form>
+
+                <div class="text-center mt-3 pt-3 border-top border-secondary border-opacity-25">
+                    <span class="text-secondary small">Already have an account? </span>
+                    <a href="{{ url_for('login') }}" class="text-info fw-semibold text-decoration-none small">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

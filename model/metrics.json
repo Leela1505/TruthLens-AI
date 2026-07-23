@@ -1,0 +1,18 @@
+{
+    "model_name": "Passive Aggressive Classifier",
+    "accuracy": 90.0,
+    "precision": 100.0,
+    "recall": 80.0,
+    "f1_score": 88.89,
+    "confusion_matrix": [
+        [
+            5,
+            0
+        ],
+        [
+            1,
+            4
+        ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n        FAKE       1.00      0.80      0.89         5\n        REAL       0.83      1.00      0.91         5\n\n    accuracy                           0.90        10\n   macro avg       0.92      0.90      0.90        10\nweighted avg       0.92      0.90      0.90        10\n"
+}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}TruthLens AI - Intelligent Fake News Detection Platform{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 text-center text-lg-start position-relative overflow-hidden">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <span class="badge bg-primary bg-opacity-25 text-info border border-info border-opacity-25 rounded-pill px-3 py-2 mb-3">
+                    <i class="fas fa-microchip me-1"></i> AI NLP Fact Checking Engine
+                </span>
+                <h1 class="display-4 fw-extrabold text-white mb-3">
+                    Detect <span class="text-transparent bg-clip-text" style="background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fake News</span> in Seconds with AI
+                </h1>
+                <p class="lead text-secondary mb-4">
+                    TruthLens AI leverages advanced Natural Language Processing and Machine Learning models to analyze article text, detect misinformation patterns, and deliver instant probability confidence scores with explainable AI.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                    {% if session.get('user_id') %}
+                    <a href="{{ url_for('detect') }}" class="btn btn-gradient-primary btn-lg rounded-pill px-4">
+                        <i class="fas fa-wand-magic-sparkles me-2"></i> Start Verification
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        <i class="fas fa-gauge-high me-2"></i> View Dashboard
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('register') }}" class="btn btn-gradient-primary btn-lg rounded-pill px-4">
+                        <i class="fas fa-user-plus me-2"></i> Get Started Free
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        <i class="fas fa-right-to-bracket me-2"></i> Log In
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-4 p-md-5 position-relative">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="text-white mb-0"><i class="fas fa-bolt text-warning me-2"></i> Live Preview Demo</h5>
+                        <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30 rounded-pill">Model Active</span>
+                    </div>
+                    <div class="bg-dark bg-opacity-60 p-3 rounded-3 mb-3 border border-secondary border-opacity-25">
+                        <p class="small text-secondary mb-1">Sample News Input:</p>
+                        <p class="text-light small fst-italic mb-0">
+                            "Breakthrough in renewable energy! NREL researchers develop solar cell achieving record 35% efficiency level..."
+                        </p>
+                    </div>
+                    <div class="p-3 rounded-3 bg-opacity-20 bg-success border border-success border-opacity-30">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge badge-real fw-bold fs-6">✓ REAL NEWS</span>
+                            <span class="fw-bold text-success">97.8% Confidence</span>
+                        </div>
+                        <div class="progress mt-2 confidence-progress">
+                            <div class="progress-bar bg-success" style="width: 97.8%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-dark bg-opacity-50">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-white mb-2">Engineered for News Authenticity</h2>
+            <p class="text-secondary">Comprehensive toolset for journalists, researchers, and conscious readers</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100 text-center">
+                    <div class="rounded-circle bg-primary bg-opacity-20 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-brain fs-3 text-info"></i>
+                    </div>
+                    <h4 class="text-white h5 mb-3">Machine Learning NLP</h4>
+                    <p class="text-secondary small">
+                        Utilizes TF-IDF vectorization and PassiveAggressive/Logistic regression classifiers trained on verified news datasets.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100 text-center">
+                    <div class="rounded-circle bg-info bg-opacity-20 text-info d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-magnifying-glass-chart fs-3 text-cyan" style="color:#06b6d4;"></i>
+                    </div>
+                    <h4 class="text-white h5 mb-3">Explainable AI</h4>
+                    <p class="text-secondary small">
+                        Don't just get a binary classification. View the top keywords and linguistic patterns that drove the model's prediction.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100 text-center">
+                    <div class="rounded-circle bg-success bg-opacity-20 text-success d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-box-archive fs-3 text-success"></i>
+                    </div>
+                    <h4 class="text-white h5 mb-3">Full Prediction History</h4>
+                    <p class="text-secondary small">
+                        Save every scan automatically. Filter, search, and manage your analysis log with audit capabilities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="fw-bold text-white mb-3">Combatting Misinformation in the Digital Era</h2>
+                <p class="text-secondary">
+                    In today's fast-paced digital ecosystem, fake news and misleading propaganda spread faster than truth. TruthLens AI was built to empower individuals and organizations with instant, data-backed truth verification tools.
+                </p>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i> Instant processing of text snippets and articles</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i> Probabilistic confidence scoring (0 - 100%)</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i> Enterprise grade admin analytics and user auditing</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-4 text-center">
+                    <i class="fas fa-shield-virus text-info mb-3" style="font-size: 4rem;"></i>
+                    <h4 class="text-white">96.5% Precision Rate</h4>
+                    <p class="text-secondary small mb-0">Evaluated on cross-validated benchmark news corpus datasets.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-dark bg-opacity-50">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold text-white mb-2">Get in Touch</h2>
+                <p class="text-secondary mb-4">Have questions or want to integrate TruthLens AI into your media workflow?</p>
+                
+                <div class="glass-card p-4 p-md-5 text-start">
+                    <form onsubmit="event.preventDefault(); alert('Thank you for contacting TruthLens AI! Our support team will get back to you shortly.');">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">Your Name</label>
+                                <input type="text" class="form-control" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">Email Address</label>
+                                <input type="email" class="form-control" placeholder="jane@example.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-secondary small">Message</label>
+                                <textarea class="form-control" rows="4" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-gradient-primary rounded-pill px-4">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

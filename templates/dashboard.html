@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - TruthLens AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Welcome Header -->
+    <div class="glass-card p-4 mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+        <div>
+            <span class="badge bg-info bg-opacity-20 text-info border border-info border-opacity-25 rounded-pill px-3 py-1 mb-2">
+                <i class="fas fa-user-check me-1"></i> User Workspace
+            </span>
+            <h2 class="fw-bold text-white mb-1">Welcome back, {{ user.full_name or user.username }}!</h2>
+            <p class="text-secondary small mb-0">Here is your fake news detection overview and statistics summary.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('detect') }}" class="btn btn-gradient-primary rounded-pill px-4">
+                <i class="fas fa-plus me-2"></i> New Analysis
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards Grid -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="glass-card p-4 stat-card">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary small fw-medium text-uppercase">Total Scans</span>
+                    <i class="fas fa-calculator text-primary fs-4"></i>
+                </div>
+                <div class="stat-number text-white">{{ total_scans }}</div>
+                <span class="text-secondary small">Total articles analyzed</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card p-4 stat-card real">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary small fw-medium text-uppercase">Real News</span>
+                    <i class="fas fa-circle-check text-success fs-4"></i>
+                </div>
+                <div class="stat-number text-success">{{ real_count }}</div>
+                <span class="text-secondary small">Verified authentic articles</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card p-4 stat-card fake">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary small fw-medium text-uppercase">Fake News</span>
+                    <i class="fas fa-triangle-exclamation text-danger fs-4"></i>
+                </div>
+                <div class="stat-number text-danger">{{ fake_count }}</div>
+                <span class="text-secondary small">Detected fake/misleading</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card p-4 stat-card confidence">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary small fw-medium text-uppercase">Avg Confidence</span>
+                    <i class="fas fa-bullseye text-info fs-4"></i>
+                </div>
+                <div class="stat-number text-info">{{ avg_confidence }}%</div>
+                <span class="text-secondary small">Average model certainty</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts & Recent Activity Row -->
+    <div class="row g-4">
+        <!-- Analytics Chart -->
+        <div class="col-lg-5">
+            <div class="glass-card p-4 h-100">
+                <h5 class="fw-bold text-white mb-3"><i class="fas fa-chart-pie me-2 text-info"></i> Detection Distribution</h5>
+                {% if total_scans > 0 %}
+                <div style="height: 250px; position: relative;">
+                    <canvas id="predictionChart" data-type="user"></canvas>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-secondary">
+                    <i class="fas fa-chart-line fs-1 mb-2 opacity-50"></i>
+                    <p class="small mb-0">No analysis data available yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Recent Predictions Table -->
+        <div class="col-lg-7">
+            <div class="glass-card p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold text-white mb-0"><i class="fas fa-clock-rotate-left me-2 text-primary"></i> Recent Scans</h5>
+                    <a href="{{ url_for('history') }}" class="text-info text-decoration-none small fw-semibold">View All <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+
+                {% if recent_predictions %}
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover align-middle mb-0 bg-transparent">
+                        <thead>
+                            <tr class="text-secondary small border-secondary border-opacity-25">
+                                <th>Article Title</th>
+                                <th>Result</th>
+                                <th>Confidence</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pred in recent_predictions %}
+                            <tr class="border-secondary border-opacity-10">
+                                <td>
+                                    <span class="text-white fw-medium d-block text-truncate" style="max-width: 220px;" title="{{ pred.news_title }}">
+                                        {{ pred.news_title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if pred.prediction == 'REAL' %}
+                                    <span class="badge badge-real">REAL</span>
+                                    {% else %}
+                                    <span class="badge badge-fake">FAKE</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="fw-semibold text-light">{{ pred.confidence }}%</span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary small">{{ pred.created_at.strftime('%b %d, %H:%M') }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-secondary">
+                    <i class="fas fa-folder-open fs-1 mb-2 opacity-50"></i>
+                    <p class="small mb-3">You haven't run any fake news scans yet.</p>
+                    <a href="{{ url_for('detect') }}" class="btn btn-gradient-primary btn-sm rounded-pill px-3">Start First Scan</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard_charts.js') }}"></script>
+{% endblock %}
